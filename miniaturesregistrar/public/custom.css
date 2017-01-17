@@ -1,0 +1,54 @@
+.underline:hover {
+    text-decoration: underline;
+}
+.headline {
+    margin: 15px 0;
+    padding: 0 5px;
+    clear: both;
+}
+.headline-title {
+    float: left;
+    margin: 10px 0;
+    font-size: 18px;
+}
+.tab-margin {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.float-right {
+    float: right;
+}
+.margin-4 {
+    margin: 0px 4px;
+}
+.margin-4 a {
+    color: #fff;
+}
+.current-link {
+    color: #f0ad4e !important;
+    text-decoration: underline;
+}
+.not-current-link {
+}
+.logout {
+    margin-right: 0px;
+}
+.base-headline-title h3 {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+.content-block {
+    margin: 10px;
+}
+.content-block-404 {
+    text-align: center;
+    margin-top: 200px;
+}
+.topmenu {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.menuspace {
+    padding: 0px 8px;
+}
+
