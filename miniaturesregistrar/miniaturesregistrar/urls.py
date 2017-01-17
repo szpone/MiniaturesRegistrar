@@ -21,6 +21,6 @@ from minis.views import AddMiniForm
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'logout/$', logout_then_login, name="site-logout"),
-    url(r'add_mini/$', AddMiniForm.as_view(), name='add-mini'),
+    url(r'^add_mini/$', AddMiniForm.as_view(), name='add-mini'),
 
 ]

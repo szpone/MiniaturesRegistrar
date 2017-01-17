@@ -1,5 +1,5 @@
 from django import forms
-from minis.models import Army, System, Miniatures, PaintManufacturer, Colors
+from minis.models import Army, System, Miniature, PaintManufacturer, Paint
 
 
 class AddMini(forms.Form):
@@ -8,9 +8,5 @@ class AddMini(forms.Form):
     system_choice = forms.ModelChoiceField(queryset=System.objects.all(),
                                            required=True, empty_label="----")
     miniature_choice = forms.ModelChoiceField(
-                                            queryset=Miniatures.objects.all(),
+                                            queryset=Miniature.objects.all(),
                                             required=True, empty_label="----")
-
-
-class MiniColors(forms.Form):
-    pass

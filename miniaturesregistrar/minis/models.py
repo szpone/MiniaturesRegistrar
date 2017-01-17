@@ -21,54 +21,56 @@ MINIATURE_ELEMENTS = (
 
 
 class System(models.Model):
-    system_name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128)
 
     def __str__(self):
-        return self.system_name
+        return self.name
 
 # Army model - one system can have many armies
 
 
 class Army(models.Model):
-    system = models.ForeignKey(System, related_name="system")
-    army_name = models.CharField(max_length=128)
+    system = models.ForeignKey(System)
+    name = models.CharField(max_length=128)
 
     def __str__(self):
-        return self.army_name
+        return self.name
 
 # Miniatures can belong only to one army
 
 
-class Miniatures(models.Model):
-    army = models.ForeignKey(Army, related_name="army")
-    miniature_name = models.CharField(max_length=128)
+class Miniature(models.Model):
+    army = models.ForeignKey(Army)
+    name = models.CharField(max_length=128)
     mini_image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
-        return self.miniature_name
+        return self.name
 
 # paint colors
 
 
-class Colors(models.Model):
-    color_name = models.CharField(max_length=64)
-    miniatures = models.ManyToManyField(Miniatures, related_name="miniatures")
+class Paint(models.Model):
+    name = models.CharField(max_length=64)
+    miniature = models.ManyToManyField(Miniature)
 
     def __str__(self):
-        return self.color_name
+        return self.name
 
 # paint producers
 
 
 class PaintManufacturer(models.Model):
     manufacturer = models.CharField(max_length=64)
-    colors = models.ForeignKey(Colors, related_name="color")
+    paint = models.ForeignKey(Paint)
 
     def __str__(self):
         return self.manufacturer
 
+# model for adding specific colors to miniatures elements
 
-class ElementsColor(models.Model):
-    paints = models.ForeignKey(Colors, related_name="color_elements")
-    miniatures = models.ForeignKey(Miniatures, related_name="minis")
-    elements = models.IntegerField(choices=MINIATURE_ELEMENTS)
+
+class Element(models.Model):
+    paint = models.ForeignKey(Paint)
+    miniature = models.ForeignKey(Miniature)
+    number = models.IntegerField(choices=MINIATURE_ELEMENTS)

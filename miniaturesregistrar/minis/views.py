@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import FormView
 from minis.forms import AddMini
-# from exercises.models import MINIATURE_ELEMENTS
-
+from django.views import View
+from minis.models import Miniature
 # Create your views here.
 
 
@@ -16,3 +16,12 @@ class AddMiniForm(FormView):
         d['system_choice'] = form.cleaned_data['system_choice']
         d['miniature_choice'] = form.cleaned_data['miniature_choice']
         return render(None, 'minis/addmini_form.html', {"data": d})
+
+
+class MiniColors(View):
+    def get(self, request):
+        form = AddMini
+        return render(request, 'minis/addmini_form.html', {"form": form})
+
+    def post(self, request):
+        pass
