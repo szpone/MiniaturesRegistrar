@@ -16,11 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
-from minis.views import AddMiniForm
+from minis.views import AddMiniView, MiniColorsView, ElementView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'logout/$', logout_then_login, name="site-logout"),
-    url(r'^add_mini/$', AddMiniForm.as_view(), name='add-mini'),
+    url(r'^add_mini/$', AddMiniView.as_view(), name='add-mini'),
+    url(r'^mini_colors/(?P<miniature_id>\d+)/?$', MiniColorsView.as_view(),
+        name="mini-colors"),
+    url(r'^element_view/(?P<id>(\d)+)', ElementView.as_view()),
 
 ]

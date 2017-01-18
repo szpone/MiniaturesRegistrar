@@ -1,0 +1,38 @@
+{% extends 'minis/base.html' %}
+
+{% block title %}
+    Your colors!
+{% endblock %}
+{% block content %}
+    {% csrf_token %}
+    <input type="hidden" id="miniature-id" value="{{ miniature.id }}">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            Colors for <strong>{{ miniature.name }}</strong>
+        </div>
+        <div class="panel-body">
+        </div>
+    </div>
+    <ul class="list-group">
+        {% for id, name in elements %}
+            <li class="list-group-item">{{ name }}
+            <br>
+            {% for i in paint_range %}
+                <select>
+                    <option value="">Choose your paint</option>
+                    {% for p_m in manufacturers %}
+                        <option disabled>{{ p_m.manufacturer }}</option>
+                        {% for p in p_m.paints %}
+                            <option value="{{ p.id }}">{{ p.name }}</option>
+                        {% endfor %}
+                    {% endfor %}
+                </select>
+            {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+
+<button id="save">Save</button>
+<script type="text/javascript" src="/static/bnt.js"></script>
+</div>
+{% endblock %}

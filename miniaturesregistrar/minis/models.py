@@ -11,7 +11,7 @@ MINIATURE_ELEMENTS = (
     (5, "Weapon_steel"),
     (6, "Clothes_upper"),
     (7, "Clothes_lower"),
-    (8, "Shoes"),
+    (8, "Boots"),
     (9, "Golden_elements"),
     (10, "Bone_elements"),
     (11, "Base")
@@ -39,30 +39,33 @@ class Army(models.Model):
 # Miniatures can belong only to one army
 
 
-class Miniature(models.Model):
-    army = models.ForeignKey(Army)
-    name = models.CharField(max_length=128)
-    mini_image = models.ImageField(null=True, blank=True)
-
-    def __str__(self):
-        return self.name
 
 # paint colors
 
 
 class Paint(models.Model):
     name = models.CharField(max_length=64)
-    miniature = models.ManyToManyField(Miniature)
+    manufacturer = models.ForeignKey("PaintManufacturer")
 
     def __str__(self):
         return self.name
+
+
+class Miniature(models.Model):
+    army = models.ForeignKey(Army)
+    name = models.CharField(max_length=128)
+    mini_image = models.ImageField(null=True, blank=True)
+    paint = models.ManyToManyField(Paint)
+
+    def __str__(self):
+        return self.name
+
 
 # paint producers
 
 
 class PaintManufacturer(models.Model):
     manufacturer = models.CharField(max_length=64)
-    paint = models.ForeignKey(Paint)
 
     def __str__(self):
         return self.manufacturer
@@ -71,6 +74,6 @@ class PaintManufacturer(models.Model):
 
 
 class Element(models.Model):
-    paint = models.ForeignKey(Paint)
+    paints = models.ManyToManyField(Paint)
     miniature = models.ForeignKey(Miniature)
     number = models.IntegerField(choices=MINIATURE_ELEMENTS)
