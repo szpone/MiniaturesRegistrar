@@ -24,6 +24,6 @@ urlpatterns = [
     url(r'^add_mini/$', AddMiniView.as_view(), name='add-mini'),
     url(r'^mini_colors/(?P<miniature_id>\d+)/?$', MiniColorsView.as_view(),
         name="mini-colors"),
-    url(r'^element_view/(?P<id>(\d)+)', ElementView.as_view()),
+    url(r'^element_view/(?P<id>(\d)+)', ElementView.as_view(), name="element-view"),
 
 ]

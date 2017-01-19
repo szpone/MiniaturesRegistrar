@@ -9,7 +9,7 @@ from rest_framework import status
 from django.http import Http404
 from .serializers import ElementsSerializer
 from django.views.decorators.csrf import csrf_exempt
-
+import json
 # Create your views here.
 
 
@@ -30,8 +30,13 @@ class MiniColorsView(View):
         miniature = Miniature.objects.get(pk=miniature_id)
         manufacturers = PaintManufacturer.objects.all()
         elements = MINIATURE_ELEMENTS
+        elements_e = []
+
+
         for m in manufacturers:
             m.paints = m.paint_set.all()
+
+
 
         return render(request, 'minis/mini_colors.html', {
             'miniature': miniature,
@@ -66,6 +71,18 @@ class MiniColorsView(View):
 
 class ElementView(APIView):
     def post(self, request, id, format=None):
-        colors = request.data['colors']
-        # save to database
+        all_colors = request.data['colors']
+        for index, colors in enumerate(json.loads(all_colors)):
+            print(index, colors)
+            # element = Element()
+            min_id = Miniature.objects.get(pk=id)
+            element, _create = Element.objects.get_or_create(number=index,
+                                                             miniature=min_id)
+            element.save()
+            for paint_pk in map(int, filter(lambda x: x, colors)):
+                element.paints.add(Paint.objects.get(pk=paint_pk))
+            element.save()
+
+        print(request.data)
         return Response('OK')
+        # fajnie byłoby usuwać kolory
