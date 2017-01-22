@@ -29,9 +29,24 @@ class MiniColorsView(View):
     def get(self, request, miniature_id):
         miniature = Miniature.objects.get(pk=miniature_id)
         manufacturers = PaintManufacturer.objects.all()
-        elements = MINIATURE_ELEMENTS
-        elements_e = []
-
+        element_types = MINIATURE_ELEMENTS
+        elements = Miniature.objects.get(pk=miniature_id).elements
+        el_type = []
+        for el_type_id, name in element_types:
+            el_for_types = elements.filter(number=el_type_id)
+            _eee = [el_type_id,name]
+            if el_for_types.count():
+                el = el_for_types[0].paints.all()
+                _eeee = []
+                for i in range(3):
+                    if i < el.count():
+                        _eeee.append(el[i])
+                    else:
+                        _eeee.append(None)
+                _eee.append(_eeee)
+            else:
+                _eee.append([None,None,None])
+            el_type.append(_eee)
 
         for m in manufacturers:
             m.paints = m.paint_set.all()
@@ -41,7 +56,8 @@ class MiniColorsView(View):
         return render(request, 'minis/mini_colors.html', {
             'miniature': miniature,
             'manufacturers': manufacturers,
-            'elements': elements,
+            'elements': element_types,
+            'el_type': el_type,
             'paint_range': range(3),
         })
 
@@ -86,3 +102,6 @@ class ElementView(APIView):
         print(request.data)
         return Response('OK')
         # fajnie byłoby usuwać kolory
+
+
+# Miniature.elements list() Element.paints

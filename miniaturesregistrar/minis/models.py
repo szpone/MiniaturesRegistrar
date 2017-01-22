@@ -42,7 +42,6 @@ class Army(models.Model):
 
 # paint colors
 
-
 class Paint(models.Model):
     name = models.CharField(max_length=64)
     manufacturer = models.ForeignKey("PaintManufacturer")
@@ -75,5 +74,5 @@ class PaintManufacturer(models.Model):
 
 class Element(models.Model):
     paints = models.ManyToManyField(Paint)
-    miniature = models.ForeignKey(Miniature)
+    miniature = models.ForeignKey(Miniature, related_name='elements')
     number = models.IntegerField(choices=MINIATURE_ELEMENTS)
