@@ -87,19 +87,23 @@ class MiniColorsView(View):
 
 class ElementView(APIView):
     def post(self, request, id, format=None):
+        print(request.data)
+
+        comment = request.data['comment']
         all_colors = request.data['colors']
+        mini = Miniature.objects.get(pk=id)
         for index, colors in enumerate(json.loads(all_colors)):
             print(index, colors)
             # element = Element()
-            min_id = Miniature.objects.get(pk=id)
             element, _create = Element.objects.get_or_create(number=index,
-                                                             miniature=min_id)
-            element.save()
+                                                             miniature=mini)
             for paint_pk in map(int, filter(lambda x: x, colors)):
                 element.paints.add(Paint.objects.get(pk=paint_pk))
             element.save()
 
-        print(request.data)
+        mini.comment = comment
+        mini.save()
+
         return Response('OK')
         # fajnie byłoby usuwać kolory
 

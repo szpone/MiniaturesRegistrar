@@ -16,7 +16,6 @@ pdbpp==0.8.3
 pexpect==4.2.1
 pickleshare==0.7.4
 Pillow==4.0.0
-pkg-resources==0.0.0
 prompt-toolkit==1.0.9
 ptpython==0.36
 ptyprocess==0.5.1

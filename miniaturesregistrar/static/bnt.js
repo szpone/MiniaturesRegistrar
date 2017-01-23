@@ -3,6 +3,7 @@ var csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
 document.addEventListener("DOMContentLoaded", function(event) {
    var btnSubmit = document.querySelector("#save");
    var allLi = document.querySelectorAll('li.list-group-item');
+   var comment = document.querySelector("#comment");
 
    btnSubmit.addEventListener("click", function(event) {
      var data = [];
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
        {
          url: "/element_view/" + minId,
          data: {
+           comment: comment.value,
            colors: JSON.stringify(data),
            csrfmiddlewaretoken: csrftoken,
          },

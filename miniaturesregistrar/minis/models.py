@@ -55,6 +55,7 @@ class Miniature(models.Model):
     name = models.CharField(max_length=128)
     mini_image = models.ImageField(null=True, blank=True)
     paint = models.ManyToManyField(Paint)
+    comment = models.TextField(blank=True)
 
     def __str__(self):
         return self.name

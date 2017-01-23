@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap3',
     'rest_framework',
-    'shell_plus',
     #  my apps
     'minis',
 ]
@@ -83,11 +82,11 @@ DATABASES = {
     'default': {
         'HOST': '127.0.0.1',
         'NAME': 'miniatures_registrar',
-        'ENGINE': 'mysql.connector.django',
-        'USER': 'root',
-        'PASSWORD': 'coderslab',
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'hel',
+        'PASSWORD': '',
         'OPTIONS': {
-                    'autocommit': True,
+
         },
     }
 }
