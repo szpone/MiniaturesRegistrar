@@ -3,18 +3,18 @@ import json
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import FormView
-from minis.forms import AddMiniForm
+from minis.forms import AddMiniForm, RegistrationForm
 from minis.models import Miniature, Paint, PaintManufacturer, MINIATURE_ELEMENTS, Element, System
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.models import User
 
 
 # Create your views here.
 
 
-class AddMiniView(FormView):
+class AddMiniView(LoginRequiredMixin, FormView):
     template_name = 'minis/addmini_form.html'
     form_class = AddMiniForm
 
@@ -23,7 +23,7 @@ class AddMiniView(FormView):
         return redirect("mini-colors", miniature.id)
 
 
-class MiniColorsView(View):
+class MiniColorsView(LoginRequiredMixin, View):
     def get(self, request, miniature_id):
         miniature = Miniature.objects.get(pk=miniature_id)
         manufacturers = PaintManufacturer.objects.all()
@@ -63,7 +63,7 @@ class MiniColorsView(View):
         pass
 
 
-class ElementView(APIView):
+class ElementView(LoginRequiredMixin, APIView):
     def post(self, request, id, format=None):
         print(request.data)
 
@@ -90,3 +90,16 @@ class MainView(LoginRequiredMixin, View):
     def get(self, request):
         systems = System.objects.all()
         return render(request, 'minis/main_page.html', {'systems': systems})
+
+class RegisterView(FormView):
+    template_name = 'registration/registration_form.html'
+    form_class = RegistrationForm
+
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        email = form.cleaned_data['email']
+        user = User.objects.create_user(username, email, password)
+        return redirect('main')
+
+

@@ -10,7 +10,3 @@ class AddMini(forms.Form):
     miniature_choice = forms.ModelChoiceField(
                                             queryset=Miniatures.objects.all(),
                                             required=True, empty_label="----")
-
-
-class MiniColors(forms.Form):
-    pass

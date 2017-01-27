@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
-from minis.views import AddMiniView, MiniColorsView, ElementView, MainView
+from minis.views import AddMiniView, MiniColorsView, ElementView, MainView, RegisterView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^element_view/(?P<id>(\d)+)$', ElementView.as_view(), name="element"),
     url(r'^$', MainView.as_view(), name="main"),
     url(r'^', include('django.contrib.auth.urls')),
+    url(r'^register/$', RegisterView.as_view(), name="register"),
 
 ]
