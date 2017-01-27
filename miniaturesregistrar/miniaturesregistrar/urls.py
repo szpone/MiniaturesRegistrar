@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
 from minis.views import AddMiniView, MiniColorsView, ElementView, MainView
@@ -26,5 +26,6 @@ urlpatterns = [
         name="mini-colors"),
     url(r'^element_view/(?P<id>(\d)+)$', ElementView.as_view(), name="element"),
     url(r'^$', MainView.as_view(), name="main"),
+    url(r'^', include('django.contrib.auth.urls')),
 
 ]

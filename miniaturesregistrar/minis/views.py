@@ -1,15 +1,16 @@
+import json
+
 from django.shortcuts import render, redirect
+from django.views import View
 from django.views.generic import FormView
 from minis.forms import AddMiniForm
-from django.views import View
 from minis.models import Miniature, Paint, PaintManufacturer, MINIATURE_ELEMENTS, Element, System
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from django.http import Http404
-from .serializers import ElementsSerializer
-from django.views.decorators.csrf import csrf_exempt
-import json
+from rest_framework.views import APIView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+
 # Create your views here.
 
 
@@ -62,26 +63,6 @@ class MiniColorsView(View):
         pass
 
 
-# class ElementView(APIView):
-#     def get_object(self, pk):
-#         try:
-#             return Element.objects.get(pk=pk)
-#         except Element.DoesNotExist:
-#             raise Http404
-
-#     def get(self, request, id, format=None):
-#         element = self.get_object(id)
-#         serializer = ElementsSerializer(element, context={"request": request})
-#         return Response(serializer.data)
-
-#     def put(self, request, id, format=None):
-#         element = self.get_object(id)
-#         serializer = ElementsSerializer(element, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-
-
 class ElementView(APIView):
     def post(self, request, id, format=None):
         print(request.data)
@@ -105,7 +86,7 @@ class ElementView(APIView):
         # fajnie byłoby usuwać kolory
 
 
-class MainView(View):
+class MainView(LoginRequiredMixin, View):
     def get(self, request):
         systems = System.objects.all()
         return render(request, 'minis/main_page.html', {'systems': systems})
