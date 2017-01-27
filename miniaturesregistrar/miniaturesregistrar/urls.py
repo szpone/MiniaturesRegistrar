@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
-from minis.views import AddMiniView, MiniColorsView, ElementView
+from minis.views import AddMiniView, MiniColorsView, ElementView, MainView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^add_mini/$', AddMiniView.as_view(), name='add-mini'),
     url(r'^mini_colors/(?P<miniature_id>\d+)/?$', MiniColorsView.as_view(),
         name="mini-colors"),
-    url(r'^element_view/(?P<id>(\d)+)', ElementView.as_view(), name="element-view"),
+    url(r'^element_view/(?P<id>(\d)+)$', ElementView.as_view(), name="element"),
+    url(r'^$', MainView.as_view(), name="main"),
 
 ]

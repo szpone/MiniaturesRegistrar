@@ -105,4 +105,6 @@ class ElementView(APIView):
         # fajnie byłoby usuwać kolory
 
 
-# Miniature.elements list() Element.paints
+class MainView(View):
+    def get(self, request):
+        return render(request, 'minis/main_page.html')
