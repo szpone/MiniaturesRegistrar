@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import FormView
 from minis.forms import AddMiniForm
 from django.views import View
-from minis.models import Miniature, Paint, PaintManufacturer, MINIATURE_ELEMENTS, Element
+from minis.models import Miniature, Paint, PaintManufacturer, MINIATURE_ELEMENTS, Element, System
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -107,4 +107,5 @@ class ElementView(APIView):
 
 class MainView(View):
     def get(self, request):
-        return render(request, 'minis/main_page.html')
+        systems = System.objects.all()
+        return render(request, 'minis/main_page.html', {'systems': systems})

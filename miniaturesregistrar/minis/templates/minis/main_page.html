@@ -5,4 +5,8 @@
 {% endblock %}
 
 {% block content %}
+System:
+{% for s in systems %}
+<strong>{{ s.name }}</strong>
+{% endfor %}
 {% endblock %}
