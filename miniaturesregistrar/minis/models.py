@@ -4,17 +4,17 @@ from django.db import models
 # Create your models here.
 
 MINIATURE_ELEMENTS = (
-    (1, "Skin"),
-    (2, "Weapon_wood"),
-    (3, "Eyes"),
-    (4, "Armor"),
-    (5, "Weapon_steel"),
-    (6, "Clothes_upper"),
-    (7, "Clothes_lower"),
-    (8, "Boots"),
-    (9, "Golden_elements"),
-    (10, "Bone_elements"),
-    (11, "Base")
+    (0, "Skin"),
+    (1, "Weapon_wood"),
+    (2, "Eyes"),
+    (3, "Armor"),
+    (4, "Weapon_steel"),
+    (5, "Clothes_upper"),
+    (6, "Clothes_lower"),
+    (7, "Boots"),
+    (8, "Golden_elements"),
+    (9, "Bone_elements"),
+    (10, "Base")
     )
 
 # a wargame - set of rules, a wargame can have many armies

@@ -31,22 +31,39 @@ class MiniColorsView(LoginRequiredMixin, View):
         manufacturers = PaintManufacturer.objects.all()
         element_types = MINIATURE_ELEMENTS
         elements = Miniature.objects.get(pk=miniature_id).elements
-        el_type = []
-        for el_type_id, name in element_types:
-            el_for_types = elements.filter(number=el_type_id)
-            _eee = [el_type_id,name]
-            if el_for_types.count():
-                el = el_for_types[0].paints.all()
-                _eeee = []
-                for i in range(3):
-                    if i < el.count():
-                        _eeee.append(el[i])
-                    else:
-                        _eeee.append(None)
-                _eee.append(_eeee)
+
+        # list of [el_type_id, el_type_name, paints]
+        el_types = []
+        for el_type_id, el_type_name in element_types:
+            elements_of_this_type = elements.filter(number=el_type_id)
+
+            if elements_of_this_type.count() > 0:
+                element = elements_of_this_type[0]
+                all_paints = element.paints.all()
+
+                paints = [
+                    all_paints[0] if all_paints.count() > 0 else None,
+                    all_paints[1] if all_paints.count() > 1 else None,
+                    all_paints[2] if all_paints.count() > 2 else None,
+                ]
             else:
-                _eee.append([None,None,None])
-            el_type.append(_eee)
+                paints = [None, None, None]
+
+            el_types.append([el_type_id, el_type_name, paints])
+            # el_for_types = elements.filter(number=el_type_id)
+            # _eee = [el_type_id,name]
+            # if el_for_types.count():
+            #     el = el_for_types[0].paints.all()
+            #     _eeee = []
+            #     for i in range(3):
+            #         if i < el.count():
+            #             _eeee.append(el[i])
+            #         else:
+            #             _eeee.append(None)
+            #     _eee.append(_eeee)
+            # else:
+            #     _eee.append([None,None,None])
+            # el_type.append(_eee)
 
         for m in manufacturers:
             m.paints = m.paint_set.all()
@@ -57,7 +74,7 @@ class MiniColorsView(LoginRequiredMixin, View):
             'miniature': miniature,
             'manufacturers': manufacturers,
             'elements': element_types,
-            'el_type': el_type,
+            'el_type': el_types,
             'paint_range': range(3),
         })
 

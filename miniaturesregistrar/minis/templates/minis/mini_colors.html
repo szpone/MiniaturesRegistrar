@@ -21,7 +21,7 @@
             <br>
             {% for paint in paints %}
                 <select>
-                    <option value="">Choose your paint</option>
+                    <option value=""></option>
                     {% for p_m in manufacturers %}
                         <option disabled>{{ p_m.manufacturer }}</option>
                         {% for p in p_m.paints %}
