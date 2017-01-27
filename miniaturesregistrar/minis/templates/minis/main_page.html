@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block content %}
-
     {% for system in systems %}
         <div class="panel panel-default">
             <div class="panel-heading"><strong>{{ system.name }}</strong></div>
@@ -15,9 +14,11 @@
                     <li><strong>{{ army.name }}</strong>
                         <ul>
                         {% for miniature in army.miniature_set.all %}
+                            {% if miniature in user_miniatures %}
                             <li>
                                 <a href="{% url 'mini-colors' miniature.id %}">{{ miniature.name }}</a>
                             </li>
+                            {% endif %}
                         {% endfor %}
                         </ul>
                     </li>
@@ -26,4 +27,5 @@
             </div>
         </div>
     {% endfor %}
+    <a class='btn btn-primary' href="{% url 'add-mini' %}">Add mini!</a>
 {% endblock %}

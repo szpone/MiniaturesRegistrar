@@ -17,7 +17,8 @@
 
     <div class="topmenu">
         <p class="navbar-right logout">
-            Signed in as: {{ request.user.username }},
+            Signed in as: {{ request.user.username }}
+            <a class="menuspace" href="{% url 'main' %}">Home</a>
             <a class="menuspace" href="{% url 'site-logout' %}?next=/">LOGOUT</a>
         </p>
     </div>

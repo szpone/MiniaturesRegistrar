@@ -21,7 +21,8 @@ class AddMiniView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         army = form.cleaned_data['army']
         name = form.cleaned_data['name']
-        miniature = Miniature.objects.create(army=army, name=name)
+        user = self.request.user
+        miniature = Miniature.objects.create(army=army, name=name, user=user)
         return redirect("mini-colors", miniature.id)
 
 
@@ -50,25 +51,9 @@ class MiniColorsView(LoginRequiredMixin, View):
                 paints = [None, None, None]
 
             el_types.append([el_type_id, el_type_name, paints])
-            # el_for_types = elements.filter(number=el_type_id)
-            # _eee = [el_type_id,name]
-            # if el_for_types.count():
-            #     el = el_for_types[0].paints.all()
-            #     _eeee = []
-            #     for i in range(3):
-            #         if i < el.count():
-            #             _eeee.append(el[i])
-            #         else:
-            #             _eeee.append(None)
-            #     _eee.append(_eeee)
-            # else:
-            #     _eee.append([None,None,None])
-            # el_type.append(_eee)
 
         for m in manufacturers:
             m.paints = m.paint_set.all()
-
-
 
         return render(request, 'minis/mini_colors.html', {
             'miniature': miniature,
@@ -107,8 +92,13 @@ class ElementView(LoginRequiredMixin, APIView):
 
 class MainView(LoginRequiredMixin, View):
     def get(self, request):
+        user_miniatures = Miniature.objects.filter(user=request.user)
+
         systems = System.objects.all()
-        return render(request, 'minis/main_page.html', {'systems': systems})
+        return render(request, 'minis/main_page.html', {
+            'systems': systems,
+            'user_miniatures': user_miniatures,
+        })
 
 class RegisterView(FormView):
     template_name = 'registration/registration_form.html'
