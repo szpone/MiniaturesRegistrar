@@ -18,11 +18,8 @@ class AddMiniView(FormView):
     form_class = AddMiniForm
 
     def form_valid(self, form):
-        d = dict()
-        d['army_choice'] = form.cleaned_data['army_choice']
-        d['system_choice'] = form.cleaned_data['system_choice']
-        d['miniature_choice'] = form.cleaned_data['miniature_choice']
-        return redirect("mini-colors")
+        miniature = form.cleaned_data['miniature_choice']
+        return redirect("mini-colors", miniature.id)
 
 
 class MiniColorsView(View):

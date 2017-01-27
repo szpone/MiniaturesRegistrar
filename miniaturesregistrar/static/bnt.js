@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
        var liValues = [];
        for (var j = 0; j < allSelects.length; j++) {
          liValues.push(allSelects[j].value);
-       }
+
        data.push(liValues);
      }
      console.log(JSON.stringify(data));
