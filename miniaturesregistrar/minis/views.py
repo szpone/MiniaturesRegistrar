@@ -112,3 +112,4 @@ class RegisterView(FormView):
         return redirect('main')
 
 
+# sprawdzanie uprawnien
