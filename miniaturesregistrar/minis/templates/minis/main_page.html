@@ -5,18 +5,25 @@
 {% endblock %}
 
 {% block content %}
-    <style> ul { border: 1px solid black; } </style>
-    System:
-    <ul>
-        {% for system in systems %}
-            <li>
-                {{ system.name }}
+
+    {% for system in systems %}
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong>{{ system.name }}</strong></div>
+            <div class="panel-body">
                 <ul>
                 {% for army in system.army_set.all %}
-                    <li>{{ army.name }}</li>
-                    {% endfor %}
+                    <li><strong>{{ army.name }}</strong>
+                        <ul>
+                        {% for miniature in army.miniature_set.all %}
+                            <li>
+                                <a href="{% url 'mini-colors' miniature.id %}">{{ miniature.name }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
                 </ul>
-            </li>
-        {% endfor %}
-    </ul>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

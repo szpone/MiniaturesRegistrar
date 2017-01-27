@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'logout/$', logout_then_login, name="site-logout"),
     url(r'^add_mini/$', AddMiniView.as_view(), name='add-mini'),
-    url(r'^mini_colors/(?P<miniature_id>\d+)/?$', MiniColorsView.as_view(),
+    url(r'^minicolors/(?P<miniature_id>\d+)/?$', MiniColorsView.as_view(),
         name="mini-colors"),
     url(r'^element_view/(?P<id>(\d)+)$', ElementView.as_view(), name="element"),
     url(r'^$', MainView.as_view(), name="main"),
