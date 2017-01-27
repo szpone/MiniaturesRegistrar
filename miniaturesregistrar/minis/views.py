@@ -19,7 +19,9 @@ class AddMiniView(LoginRequiredMixin, FormView):
     form_class = AddMiniForm
 
     def form_valid(self, form):
-        miniature = form.cleaned_data['miniature_choice']
+        army = form.cleaned_data['army']
+        name = form.cleaned_data['name']
+        miniature = Miniature.objects.create(army=army, name=name)
         return redirect("mini-colors", miniature.id)
 
 

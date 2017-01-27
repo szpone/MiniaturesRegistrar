@@ -5,13 +5,11 @@ from minis.models import Army, System, Miniature
 
 
 class AddMiniForm(forms.Form):
-    system_choice = forms.ModelChoiceField(queryset=System.objects.all(),
+    system = forms.ModelChoiceField(queryset=System.objects.all(),
                                            required=True, empty_label="----")
-    army_choice = forms.ModelChoiceField(queryset=Army.objects.all(),
+    army = forms.ModelChoiceField(queryset=Army.objects.all(),
                                          required=True, empty_label="----",)
-    miniature_choice = forms.ModelChoiceField(
-                                            queryset=Miniature.objects.all(),
-                                            required=True, empty_label="----")
+    name = forms.CharField(max_length=128, required=True)
 
 def validate_username(value):
     if User.objects.filter(username=value).exists():
@@ -22,5 +20,3 @@ class RegistrationForm(forms.Form):
     username = forms.CharField(max_length=16, required=True, validators=[validate_username])
     email = forms.EmailField(required=True)
     password = forms.CharField(max_length=128, required=True, widget=forms.PasswordInput)
-
-
