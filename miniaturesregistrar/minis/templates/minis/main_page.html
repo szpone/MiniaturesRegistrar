@@ -5,8 +5,18 @@
 {% endblock %}
 
 {% block content %}
-System:
-{% for s in systems %}
-<strong>{{ s.name }}</strong>
-{% endfor %}
+    <style> ul { border: 1px solid black; } </style>
+    System:
+    <ul>
+        {% for system in systems %}
+            <li>
+                {{ system.name }}
+                <ul>
+                {% for army in system.army_set.all %}
+                    <li>{{ army.name }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
