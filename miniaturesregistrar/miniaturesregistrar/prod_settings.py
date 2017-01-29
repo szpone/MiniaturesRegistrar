@@ -4,7 +4,7 @@ DEBUG = False
 
 DATABASES = {
     'default': {
-        'HOST': '127.0.0.1',
+        'HOST': '',
         'NAME': 'miniatures_registrar',
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'mini',
