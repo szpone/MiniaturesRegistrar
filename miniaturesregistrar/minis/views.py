@@ -1,14 +1,15 @@
-import json
 
-from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect, Http404
 from django.views import View
 from django.views.generic import FormView
 from minis.forms import AddMiniForm, RegistrationForm
 from minis.models import Miniature, Paint, PaintManufacturer, MINIATURE_ELEMENTS, Element, System
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+import json
 
 
 # Create your views here.
@@ -30,8 +31,8 @@ class AddMiniView(LoginRequiredMixin, FormView):
 
 class MiniColorsView(LoginRequiredMixin, View):
     def get(self, request, miniature_id):
-        miniatures = Miniature.objects.filter(user=request.user)
-        miniature = miniatures.get(id=miniature_id)
+        miniature = get_object_or_404(Miniature, pk=miniature_id,
+                                      user=request.user)
         manufacturers = PaintManufacturer.objects.all()
         element_types = MINIATURE_ELEMENTS
         elements = Miniature.objects.get(pk=miniature_id).elements
@@ -66,28 +67,23 @@ class MiniColorsView(LoginRequiredMixin, View):
             'paint_range': range(3),
         })
 
-    def post(self, request):
-        pass
-
 
 class ElementView(LoginRequiredMixin, APIView):
     def post(self, request, id, format=None):
-        print(request.data)
+        miniature = get_object_or_404(Miniature, pk=id, user=request.user)
 
         comment = request.data['comment']
         all_colors = request.data['colors']
-        mini = Miniature.objects.get(pk=id)
         for index, colors in enumerate(json.loads(all_colors)):
             print(index, colors)
-            # element = Element()
-            element, _create = Element.objects.get_or_create(number=index,
-                                                             miniature=mini)
+            element, _create = Element.objects.get_or_create(
+                number=index, miniature=miniature)
             for paint_pk in map(int, filter(lambda x: x, colors)):
                 element.paints.add(Paint.objects.get(pk=paint_pk))
             element.save()
 
-        mini.comment = comment
-        mini.save()
+        miniature.comment = comment
+        miniature.save()
 
         return Response('OK')
 
@@ -111,5 +107,5 @@ class RegisterView(FormView):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
         email = form.cleaned_data['email']
-        user = User.objects.create_user(username, email, password)
+        User.objects.create_user(username, email, password)
         return redirect('main')
