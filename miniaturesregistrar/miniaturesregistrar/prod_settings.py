@@ -16,4 +16,4 @@ DATABASES = {
 }
 
 
-ALLOWED_HOSTS = ['178.62.22.84']
+ALLOWED_HOSTS = ['178.62.22.84', 'polandfinlandplayground.org']
