@@ -45,8 +45,7 @@ class Paint(models.Model):
 class Miniature(models.Model):
     army = models.ForeignKey(Army)
     name = models.CharField(max_length=128)
-    mini_image = models.ImageField(null=True, blank=True,
-                                   upload_to='images/%m/%d')
+    mini_image = models.ImageField(null=True, blank=True)
     paint = models.ManyToManyField(Paint)
     comment = models.TextField(blank=True)
     user = models.ForeignKey(User, null=True)

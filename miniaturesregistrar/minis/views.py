@@ -22,8 +22,11 @@ class AddMiniView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         army = form.cleaned_data['army']
         name = form.cleaned_data['name']
-        image = form.cleaned_data['image']
         user = self.request.user
+        if 'image' in self.request.FILES:
+            image = self.request.FILES['image']
+        else:
+            image = None
         miniature = Miniature.objects.create(army=army, name=name,
                                              user=user, mini_image=image)
         return redirect("mini-colors", miniature.id)
