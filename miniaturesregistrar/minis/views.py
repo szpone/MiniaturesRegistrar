@@ -21,14 +21,17 @@ class AddMiniView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         army = form.cleaned_data['army']
         name = form.cleaned_data['name']
+        image = form.cleaned_data['image']
         user = self.request.user
-        miniature = Miniature.objects.create(army=army, name=name, user=user)
+        miniature = Miniature.objects.create(army=army, name=name,
+                                             user=user, mini_image=image)
         return redirect("mini-colors", miniature.id)
 
 
 class MiniColorsView(LoginRequiredMixin, View):
     def get(self, request, miniature_id):
-        miniature = Miniature.objects.get(pk=miniature_id)
+        miniatures = Miniature.objects.filter(user=request.user)
+        miniature = miniatures.get(id=miniature_id)
         manufacturers = PaintManufacturer.objects.all()
         element_types = MINIATURE_ELEMENTS
         elements = Miniature.objects.get(pk=miniature_id).elements
@@ -87,7 +90,6 @@ class ElementView(LoginRequiredMixin, APIView):
         mini.save()
 
         return Response('OK')
-        # fajnie byłoby usuwać kolory
 
 
 class MainView(LoginRequiredMixin, View):
@@ -100,6 +102,7 @@ class MainView(LoginRequiredMixin, View):
             'user_miniatures': user_miniatures,
         })
 
+
 class RegisterView(FormView):
     template_name = 'registration/registration_form.html'
     form_class = RegistrationForm
@@ -110,6 +113,3 @@ class RegisterView(FormView):
         email = form.cleaned_data['email']
         user = User.objects.create_user(username, email, password)
         return redirect('main')
-
-
-# sprawdzanie uprawnien

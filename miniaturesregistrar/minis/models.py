@@ -16,9 +16,7 @@ MINIATURE_ELEMENTS = (
     (8, "Golden_elements"),
     (9, "Bone_elements"),
     (10, "Base")
-    )
-
-# a wargame - set of rules, a wargame can have many armies
+)
 
 
 class System(models.Model):
@@ -26,8 +24,6 @@ class System(models.Model):
 
     def __str__(self):
         return self.name
-
-# Army model - one system can have many armies
 
 
 class Army(models.Model):
@@ -37,11 +33,6 @@ class Army(models.Model):
     def __str__(self):
         return self.name
 
-# Miniatures can belong only to one army
-
-
-
-# paint colors
 
 class Paint(models.Model):
     name = models.CharField(max_length=64)
@@ -54,7 +45,8 @@ class Paint(models.Model):
 class Miniature(models.Model):
     army = models.ForeignKey(Army)
     name = models.CharField(max_length=128)
-    mini_image = models.ImageField(null=True, blank=True)
+    mini_image = models.ImageField(null=True, blank=True,
+                                   upload_to='images/%m/%d')
     paint = models.ManyToManyField(Paint)
     comment = models.TextField(blank=True)
     user = models.ForeignKey(User, null=True)
@@ -63,16 +55,11 @@ class Miniature(models.Model):
         return self.name
 
 
-# paint producers
-
-
 class PaintManufacturer(models.Model):
     manufacturer = models.CharField(max_length=64)
 
     def __str__(self):
         return self.manufacturer
-
-# model for adding specific colors to miniatures elements
 
 
 class Element(models.Model):

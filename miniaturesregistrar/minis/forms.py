@@ -1,15 +1,17 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from minis.models import Army, System, Miniature
+from minis.models import Army, System
 
 
 class AddMiniForm(forms.Form):
     system = forms.ModelChoiceField(queryset=System.objects.all(),
-                                           required=True, empty_label="----")
+                                    required=True, empty_label="----")
     army = forms.ModelChoiceField(queryset=Army.objects.all(),
-                                         required=True, empty_label="----",)
+                                  required=True, empty_label="----",)
     name = forms.CharField(max_length=128, required=True)
+    image = forms.ImageField(required=False)
+
 
 def validate_username(value):
     if User.objects.filter(username=value).exists():
@@ -17,6 +19,8 @@ def validate_username(value):
 
 
 class RegistrationForm(forms.Form):
-    username = forms.CharField(max_length=16, required=True, validators=[validate_username])
+    username = forms.CharField(max_length=16, required=True,
+                               validators=[validate_username])
     email = forms.EmailField(required=True)
-    password = forms.CharField(max_length=128, required=True, widget=forms.PasswordInput)
+    password = forms.CharField(max_length=128, required=True,
+                               widget=forms.PasswordInput)
