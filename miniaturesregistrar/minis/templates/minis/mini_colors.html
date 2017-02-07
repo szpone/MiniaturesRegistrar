@@ -7,6 +7,7 @@
 {% block content %}
     {% csrf_token %}
     <input type="hidden" id="miniature-id" value="{{ miniature.id }}">
+    <input type="hidden" id="element-view-url" value="{% url 'element' miniature.id %}">
     <div class="panel panel-success">
         <div class="panel-heading">
             Colors for <strong>{{ miniature.name }}</strong>
