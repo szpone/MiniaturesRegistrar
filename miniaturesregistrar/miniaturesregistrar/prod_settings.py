@@ -17,3 +17,6 @@ DATABASES = {
 
 
 ALLOWED_HOSTS = ['178.62.22.84', 'polandfinlandplayground.org']
+
+STATIC_URL = '/mini/static/'
+MEDIA_URL = '/mini/media/'
