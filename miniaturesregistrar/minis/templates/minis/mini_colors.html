@@ -14,7 +14,9 @@
         <div class="panel-body">
             System: <strong>{{ miniature.army.system.name }}</strong> <br>
             Army: <strong>{{ miniature.army.name }}</strong> <br>
-            Image: <img src='{{ miniature.mini_image.url }}'>
+            {% if miniature.mini_image %}
+                Image: <img src='{{ miniature.mini_image.url }}'>
+            {% endif %}
         </div>
     </div>
     <ul class="list-group">
