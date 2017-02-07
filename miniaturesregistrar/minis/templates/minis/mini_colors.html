@@ -1,4 +1,5 @@
 {% extends 'minis/base.html' %}
+{% load static %}
 
 {% block title %}
     Your colors!
@@ -39,6 +40,6 @@
 
 <button id="save">Save</button>
 <div id="save-message"></div>
-<script type="text/javascript" src="/static/bnt.js"></script>
+<script type="text/javascript" src="{% static 'bnt.js' %}"></script>
 </div>
 {% endblock %}
