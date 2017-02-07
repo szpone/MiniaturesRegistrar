@@ -1,0 +1,44 @@
+#!/bin/sh -e
+
+run_as_mini() {
+        ssh $SERVER sudo -u mini "$@"
+}
+
+run_as_root() {
+        ssh $SERVER sudo "$@"
+}
+
+run_manage() {
+        ssh $SERVER sudo -u mini sh <<EOF
+cd $SOURCE_ROOT/miniaturesregistrar
+$PYTHON manage.py $@ --settings=miniaturesregistrar.prod_settings
+EOF
+}
+
+SERVER=nikola@polandfinlandplayground.org
+REPO=${REPO:-https://github.com/szpone/MiniaturesRegistrar.git}
+BRANCH=${BRANCH:-master}
+SOURCE_ROOT=/home/mini/MiniaturesRegistrar
+PYTHON=/home/mini/env/bin/python
+
+echo
+echo "* Stopping mini"
+run_as_root supervisorctl stop mini
+
+echo
+echo "* Updating code"
+run_as_mini git -C $SOURCE_ROOT fetch $REPO $BRANCH
+run_as_mini git -C $SOURCE_ROOT reset --hard FETCH_HEAD
+
+echo
+echo "* Running migrate"
+run_manage migrate
+
+echo
+echo "* Running collectstatic"
+run_manage collectstatic --no-input
+
+echo
+echo "* Starting mini"
+run_as_root supervisorctl start mini
+
