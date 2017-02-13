@@ -1,13 +1,16 @@
 {% extends 'minis/base.html' %}
-
+{% load bootstrap_tags %}
 {% block title %}
-    Registration form
+	Registration form
 {% endblock %}
-
 {% block content %}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit">
-    </form>
+	<form action="" method="post">
+		{% csrf_token %}
+		<!--         {{ form.as_p }} -->
+		{{ form|as_bootstrap }}
+		<div class="form-actions">
+			<a href="{% url 'register' %}" class="btn">Go back</a>
+			<button type="submit" class="btn btn-primary">Save changes</button>
+		</div>
+	</form>
 {% endblock %}
