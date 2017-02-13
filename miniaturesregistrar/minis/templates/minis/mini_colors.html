@@ -1,4 +1,5 @@
 {% extends 'minis/base.html' %}
+{% load static %}
 
 {% block title %}
     Your colors!
@@ -6,6 +7,7 @@
 {% block content %}
     {% csrf_token %}
     <input type="hidden" id="miniature-id" value="{{ miniature.id }}">
+    <input type="hidden" id="element-view-url" value="{% url 'element' miniature.id %}">
     <div class="panel panel-success">
         <div class="panel-heading">
             Colors for <strong>{{ miniature.name }}</strong>
@@ -13,7 +15,9 @@
         <div class="panel-body">
             System: <strong>{{ miniature.army.system.name }}</strong> <br>
             Army: <strong>{{ miniature.army.name }}</strong> <br>
-            Image: <img src='{{ miniature.mini_image.url }}'>
+            {% if miniature.mini_image %}
+                Image: <img src='{{ miniature.mini_image.url }}'>
+            {% endif %}
         </div>
     </div>
     <ul class="list-group">
@@ -39,6 +43,6 @@
 
 <button id="save">Save</button>
 <div id="save-message"></div>
-<script type="text/javascript" src="/static/bnt.js"></script>
+<script type="text/javascript" src="{% static 'bnt.js' %}"></script>
 </div>
 {% endblock %}

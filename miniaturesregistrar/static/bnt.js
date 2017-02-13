@@ -21,10 +21,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
      console.log(JSON.stringify(data));
      var minInput = document.querySelector("#miniature-id");
      var minId = minInput.value;
+     var elementViewUrl = document.querySelector("#element-view-url").value;
      // send ajax
      $.ajax(
        {
-         url: "/element_view/" + minId,
+         url: elementViewUrl,
          data: {
            comment: comment.value,
            colors: JSON.stringify(data),

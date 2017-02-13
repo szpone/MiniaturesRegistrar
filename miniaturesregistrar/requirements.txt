@@ -1,7 +1,7 @@
 decorator==4.0.10
 Django==1.10.3
 django-bootstrap==0.2.4
-django-bootstrap3==8.0.0
+django-bootstrap3==8.1.0
 djangorestframework==3.5.3
 docopt==0.6.2
 Faker==0.7.3
